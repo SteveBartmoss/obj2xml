@@ -1,4 +1,4 @@
-import { createXml } from "./obj2xml/obj2xml"
+import { createXml } from "./obj2xml/obj2xml.js"
 
 
 let pureba = {
