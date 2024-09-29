@@ -1,6 +1,6 @@
 import file from 'fs'
 
-export function createXml(dataObject){
+export function createXml(dataObject,route,name){
 
     let content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"; // Encabezado XML
 
@@ -25,7 +25,7 @@ export function createXml(dataObject){
     content += parserXml(dataObject)
 
     try{
-        file.writeFileSync('prueba.xml',content,'utf8')
+        file.writeFileSync(`${route}${name}.xml`,content,'utf8')
         console.log("Archivo XML creado exitosamente.")
     } catch(error){
         console.error("Error al escribir el archivo XML:", error);
