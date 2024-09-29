@@ -2,24 +2,36 @@ import file from 'fs'
 
 export function createXml(dataObject){
 
-    let stackClose=[]
+    let content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"; // Encabezado XML
 
-    let labels = Object.keys(dataObject)
-    let values = Object.values(dataObject)
+    function parserXml(obj){
+        let xmlContent = "";
 
-    let content = ""
+        for(let key in obj){
+            if(obj.hasOwnProperty(key)){
+                let value = obj[key]
 
-    function parserXml(element,index,array){
-        content = `<${element}>` + content
-        content = dataObject[element] + content
-        content = `<${element}/>` + content + '\n'
+                if(typeof(value) === 'object' && vlaue !==null){
+                    xmlContent += `<${key}>\n` + parserXml(value) + `</${key}>\n`
+                } else {
+                    xmlContent += `<${key}>${value}</${key}>\n`
+                }
+            }
+        }
+
+        return xmlContent
     }
 
-    labels.forEach(parserXml)
+    content += parserXml(dataObject)
 
-    file.writeFileSync('prueba.xml',content,'utf8')
+    try{
+        file.writeFileSync('prueba.xml',content,'utf8')
+        console.log("Archivo XML creado exitosamente.")
+    } catch(error){
+        console.error("Error al escribir el archivo XML:", error);
+    }
 
-    console.log(content)
+    
 
     //console.log(labels)
     //console.log(values)
