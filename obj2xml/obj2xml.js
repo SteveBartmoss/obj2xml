@@ -1,4 +1,5 @@
 import file from 'fs'
+import {Writable} from 'stream'
 
 export function createXml(dataObject,route,name){
 
@@ -36,4 +37,30 @@ export function createXml(dataObject,route,name){
     //console.log(labels)
     //console.log(values)
     //console.log(dataObject)
+}
+
+export function createXmlStream(dataObject,writableStream){
+
+    writableStream.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+
+    function parserXml(obj,stream){
+        for(let key in obj){
+
+            if(obj.hasOwnProperty(key)){
+                let value = obj[key]
+
+                if(typeof value === 'object' && value !== null){
+                    stream.write(`<${key}>\n`)
+                    parserXml(value, stream)
+                    stream.write(`</${key}>\n`)
+                }else{
+                    stream.write(`<${key}>${value}</${key}>\n`)
+                }
+            }
+        }
+    }
+
+    parserXml(dataObject,writableStream)
+
+    writableStream.end()
 }
