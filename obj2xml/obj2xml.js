@@ -11,7 +11,7 @@ export function createXml(dataObject,route,name){
             if(obj.hasOwnProperty(key)){
                 let value = obj[key]
 
-                if(typeof(value) === 'object' && vlaue !==null){
+                if(typeof(value) === 'object' && value !==null){
                     xmlContent += `<${key}>\n` + parserXml(value) + `</${key}>\n`
                 } else {
                     xmlContent += `<${key}>${value}</${key}>\n`
