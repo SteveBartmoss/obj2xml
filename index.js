@@ -1,10 +1,16 @@
 import { createXml } from "./obj2xml/obj2xml.js"
 
 
-let pureba = {
-    edad: 10,
-    nombre: "Marco",
-    altura: 1.80
+let prueba = {
+    person: {
+        name: 'John',
+        age: 30,
+        address: {
+            city: 'New York',
+            zip: '10001'
+        }
+    },
+    job: 'Developer'
 }
 
-createXml(pureba)
+createXml(prueba,"","prueba")
